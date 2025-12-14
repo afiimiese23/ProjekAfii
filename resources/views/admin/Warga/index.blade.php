@@ -50,7 +50,7 @@
         {{-- Tambah Warga --}}
         <div class="mb-2">
             <a href="{{ route('warga.create') }}" class="btn btn-success text-white">
-                <i class="fas fa-plus-circle me-1"></i> Tambah Warga
+                <i class="fas fa-plus-circle me-1"></i> Tambah Data Warga
             </a>
         </div>
 
