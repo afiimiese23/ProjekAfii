@@ -19,7 +19,7 @@ class KategoriController extends Controller
                                 ->paginate(8)
                                 ->withQueryString();
 
-        return view('admin.Pengaduan.index', $data);
+        return view('admin.pengaduan.index', $data);
     }
 
     /**
