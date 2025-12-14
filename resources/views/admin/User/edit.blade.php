@@ -107,6 +107,20 @@
                                 name="password_confirmation" placeholder="Kosongkan jika tidak ingin mengubah">
                         </div>
 
+                        <!-- Role -->
+                        <div class="mb-3">
+                            <label for="role" class="form-label fw-semibold text-primary">Role</label>
+                            <select name="role" id="role" class="form-control shadow-sm" required>
+                                <option value="">-- Pilih Role --</option>
+                                <option value="admin" {{ $dataUser->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="pelanggan" {{ $dataUser->role == 'pelanggan' ? 'selected' : '' }}>Pelanggan</option>
+                                <option value="mitra" {{ $dataUser->role == 'mitra' ? 'selected' : '' }}>Mitra</option>
+                            </select>
+                            @error('role')
+                                <div class="text-danger small">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <!-- Tombol Simpan & Batal -->
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">

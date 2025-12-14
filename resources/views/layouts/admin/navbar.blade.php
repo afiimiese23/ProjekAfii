@@ -15,11 +15,47 @@
             <a href="{{ route('warga.index') }}" class="nav-item nav-link {{ request()->routeIs('warga.*') ? 'active' : '' }}">Warga</a>
 
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Lainnya</a>
-                <div class="dropdown-menu fade-down m-0">
-                    <a href="#" class="dropdown-item">Documentation</a>
-                    <a href="#" class="dropdown-item">Upgrade to Pro</a>
-                </div>
+                @if(Auth::check())
+                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+
+                        {{-- Avatar User --}}
+                        <img 
+                            src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('default-avatar.png') }}"
+                            class="rounded-circle me-2"
+                            alt="User Avatar"
+                            width="32" height="32"
+                        >
+
+                        {{-- Nama User --}}
+                        <span>{{ Auth::user()->name }}</span>
+                    </a>
+
+                    <div class="dropdown-menu fade-down m-0">
+
+                        {{-- Last Login --}}
+                        <a href="#" class="dropdown-item d-flex align-items-center">
+                            <i class="bi bi-clock-history me-2"></i>
+                            {{ session('last_login') }}
+                        </a>
+
+                        {{-- Settings --}}
+                        <a href="#" class="dropdown-item d-flex align-items-center">
+                            <i class="bi bi-gear me-2"></i>
+                            Settings
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+
+                        {{-- Logout --}}
+                        <a href="{{ route('auth.logout') }}" class="dropdown-item d-flex align-items-center text-danger">
+                            <i class="bi bi-box-arrow-right me-2"></i>
+                            Logout
+                        </a>
+                    </div>
+
+                @else
+                    <a href="{{ route('auth') }}" class="nav-link">Login</a>
+                @endif
             </div>
         </div>
     </div>

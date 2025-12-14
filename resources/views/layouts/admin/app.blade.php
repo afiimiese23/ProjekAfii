@@ -37,7 +37,10 @@
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    {{-- <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"> --}}
+    
+    @include('layouts.admin.js')
+
     
     {{-- start css  --}}
         @include('layouts.admin.css')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -13,7 +14,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $searchableColumns = ['name', 'email', 'password'];
+        $searchableColumns = ['name', 'email', 'role'];
 
         // Proses filter + pagination
         $data['dataUser'] = User::search($request, $searchableColumns)
@@ -41,12 +42,14 @@ class UserController extends Controller
             'name'      => 'required|string|max:255',
             'email'     => 'required|string|email|max:255|unique:users',
             'password'  => 'required|string|min:8|confirmed',
-             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // VALIDASI BARU 
+            'role' => 'required|string|in:admin,pelanggan,mitra', // VALIDASI BARU
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // VALIDASI BARU 
         ]);
 
         $data = [ 
             'name' => $request->name, 
             'email' => $request->email, 
+            'role' => $request->role,
             'password' => Hash::make($request->password), 
         ]; 
     
@@ -91,6 +94,7 @@ class UserController extends Controller
             'name' => 'required|max:100', 
             'email' => ['required', 'email', 'unique:users,email,' . $id], 
             'password' => 'nullable|min:8|confirmed', 
+            'role' => 'required|string|in:admin,pelanggan,mitra', // VALIDASI BARU
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',        
             'remove_profile_picture' => 'nullable|boolean', // BARU 
         ]); 
@@ -98,6 +102,7 @@ class UserController extends Controller
         $data = [ 
             'name' => $request->name, 
             'email' => $request->email, 
+            'role' => $request->role,
         ]; 
 
         if ($request->filled('password')) { 

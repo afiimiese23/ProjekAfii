@@ -65,6 +65,20 @@
                             @enderror 
                         </div> 
 
+                        <!-- Role (BARU DITAMBAH) -->
+                        <div class="mb-3">
+                            <label for="role" class="form-label fw-semibold text-primary">Role</label>
+                            <select id="role" name="role" class="form-control shadow-sm" required>
+                                <option value="">-- Pilih Role --</option>
+                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="pelanggan" {{ old('role') == 'pelanggan' ? 'selected' : '' }}>Pelanggan</option>
+                                <option value="mitra" {{ old('role') == 'mitra' ? 'selected' : '' }}>Mitra</option>
+                            </select>
+                            @error('role')
+                                <div class="text-danger small">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <!-- Password Confirmation -->
                         <div class="mb-4">
                             <label for="password_confirmation" class="form-label fw-semibold text-primary">Konfirmasi Password</label>
