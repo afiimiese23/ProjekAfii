@@ -20,6 +20,6 @@ class CheckRole
           return $next($request);
       }
 
-      return abort('403');
+      return abort(403, 'Kamu tidak memiliki hak akses.');
     }
 }
