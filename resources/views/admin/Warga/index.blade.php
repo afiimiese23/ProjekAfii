@@ -18,7 +18,7 @@
         <div class="alert alert-success mx-4">{!! session('success') !!}</div>
     @endif
 
-    {{-- BAR ATAS: PAGINATE + SEARCH + CLEAR + TAMBAH USER --}}
+    {{-- BAR ATAS: PAGINATE + SEARCH + CLEAR + TAMBAH WARGA --}}
     <div class="d-flex justify-content-between align-items-center flex-wrap px-4 mb-4">
 
         {{-- Pagination kiri --}}
@@ -27,7 +27,7 @@
         </div>
 
         {{-- Search + Clear --}}
-        <form method="GET" action="{{ route('user.index') }}" class="d-flex mb-2">
+        <form method="GET" action="{{ route('warga.index') }}" class="d-flex mb-2">
 
             <div class="col-md-7">
                 <div class="input-group">
@@ -42,15 +42,15 @@
                     </button>
                 </div>
             </div>
-            <a href="{{ route('user.index') }}" class="btn btn-outline-secondary w-100">
+            <a href="{{ route('warga.index') }}" class="btn btn-outline-secondary w-100">
                 Clear Filter
             </a>
         </form>
 
-        {{-- Tambah User --}}
+        {{-- Tambah Warga --}}
         <div class="mb-2">
-            <a href="{{ route('user.create') }}" class="btn btn-success text-white">
-                <i class="fas fa-plus-circle me-1"></i> Tambah User
+            <a href="{{ route('warga.create') }}" class="btn btn-success text-white">
+                <i class="fas fa-plus-circle me-1"></i> Tambah Warga
             </a>
         </div>
 
