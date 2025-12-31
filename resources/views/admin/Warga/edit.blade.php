@@ -42,7 +42,6 @@
                         <!-- FOTO PROFIL -->
                         <div class="mb-4 text-center">
                             <label class="form-label d-block fw-semibold text-primary">Foto Profil Saat Ini</label>
-
                             <img src="{{ $dataWarga->profile_picture_url }}"  
                                 id="profile-picture-preview" 
                                 alt="Profile Picture"  
@@ -50,7 +49,6 @@
                                 width="150"  
                                 height="150" 
                                 style="object-fit: cover;">
-                            
                             <div class="mt-2">
                                 @if($dataWarga->profile_picture)
                                     <div class="form-check d-flex justify-content-center">
@@ -154,6 +152,7 @@
                                 </a>
                             </div>
                         </form>        
+                        
                         <!-- SCRIPT PREVIEW -->
                         <script>
                         function previewImage(input) {
