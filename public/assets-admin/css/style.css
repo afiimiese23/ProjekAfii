@@ -604,16 +604,6 @@
     }
 }
 
-@media (max-width: 992px) {
-    .navbar-collapse {
-        display: none;
-    }
-
-    .navbar-collapse.show {
-        display: block;
-    }
-}
-
 /* ==== FIX NAVBAR MOBILE BOOTSTRAP 5 ==== */
 @media (max-width: 991.98px) {
     .navbar-collapse {
@@ -633,6 +623,35 @@
         transform: none !important;
     }
 }
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        padding: 1rem;
+        z-index: 1050;
+    }
+
+    .navbar-nav .dropdown-menu {
+        position: static;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        align-items: flex-start !important;
+    }
+
+    .navbar-nav .nav-link {
+        width: 100%;
+    }
+}
+
 
 .navbar-toggler {
     border: none;

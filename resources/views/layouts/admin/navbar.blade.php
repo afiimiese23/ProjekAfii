@@ -24,7 +24,6 @@
     {{-- Menu --}}
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto align-items-center px-4 px-lg-0">
-
             {{-- Home --}}
             <a href="{{ route('dashboard') }}"
                class="nav-item nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
