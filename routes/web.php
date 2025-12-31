@@ -82,3 +82,6 @@ Route::get('/login', function () {
 })->name('login');
 Route::get('/register', [AuthController::class, 'create'])->name('register');
 Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
+
+//auto dashboard
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

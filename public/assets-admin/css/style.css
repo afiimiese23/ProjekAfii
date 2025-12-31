@@ -533,6 +533,14 @@
 /* ============================= */
 
 /* Heading */
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    filter: none;
+}
+
 @media (max-width: 576px) {
     h4.display-3 {
         font-size: 1.6rem;
@@ -623,24 +631,6 @@
         transform: none !important;
     }
 }
-@media (max-width: 991.98px) {
-    .navbar-collapse {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: #ffffff;
-        padding: 1rem;
-        z-index: 1050;
-    }
-
-    .navbar-nav .dropdown-menu {
-        position: static;
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
-    }
-}
 
 @media (max-width: 991.98px) {
     .navbar-nav {
@@ -651,12 +641,12 @@
         width: 100%;
     }
 }
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        display: none;
+    }
 
-
-.navbar-toggler {
-    border: none;
-}
-
-.navbar-toggler-icon {
-    filter: invert(1);
+    .navbar-collapse.show {
+        display: block;
+    }
 }
