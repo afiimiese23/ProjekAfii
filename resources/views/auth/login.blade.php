@@ -104,7 +104,7 @@
         <div class="d-flex justify-content-center align-items-center mt-4">
             <span class="fw-normal">
                 Not registered?
-                <a href="./sign-up.html" class="fw-bold">Create account</a>
+                <a href="{{ route('register') }}" class="fw-bold">Create account</a>
             </span>
         </div>
     </div>

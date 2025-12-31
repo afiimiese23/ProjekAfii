@@ -72,3 +72,13 @@ Route::get('auth/logout', [AuthController::class, 'logout'])->name('auth.logout'
 Route::group(['middleware' => ['checkrole:admin']], function () {
   Route::get('user', [UserController::class, 'index'])->name('user.index');
 });
+
+//register
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+Route::get('/register', [AuthController::class, 'create'])->name('register');
+Route::post('/register', [AuthController::class, 'store'])->name('auth.store');

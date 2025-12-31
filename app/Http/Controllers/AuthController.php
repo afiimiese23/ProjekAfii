@@ -16,6 +16,39 @@ class AuthController extends Controller
 		    }
         return view('auth.login');
     }
+    public function create()
+    {
+        return view('auth.register');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|string|in:admin,pelanggan,mitra',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // upload foto
+        $profilePath = null;
+        if ($request->hasFile('profile_picture')) {
+            $profilePath = $request->file('profile_picture')
+                ->store('profile_pictures', 'public');
+        }
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'profile_picture' => $profilePath,
+        ]);
+
+        return redirect()->route('login')
+            ->with('success', 'Registrasi berhasil, silakan login');
+    }
 
     public function login(Request $request)
     {
