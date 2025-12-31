@@ -17,7 +17,8 @@ class Warga extends Model
         'agama', 
         'pekerjaan', 
         'phone', 
-        'email'
+        'email',
+        'profile_picture',
     ];
     /**
      * Scope untuk filtering dinamis
@@ -49,4 +50,13 @@ class Warga extends Model
         return $this->hasMany(Multipleupload::class, 'ref_id', 'warga_id')
                     ->where('ref_table', 'warga');
     }
+
+    public function getProfilePictureUrlAttribute() // METHOD BARU 
+    { 
+        if ($this->profile_picture) { 
+            return asset('storage/' . $this->profile_picture); 
+        } 
+        return asset('assets/images/default-avatar.png'); 
+    } 
+
 }

@@ -1,16 +1,16 @@
 @extends('layouts.admin.app')
-@section('title', 'Tambah Kategori Pengaduan')
+@section('title', 'Tambah Pengaduan Warga')
 @section('content')
 
 {{-- start content --}}
 <div class="py-4">
     <div class="d-flex justify-content-between w-100 flex-wrap">
         <div class="mb-3 mb-lg-0">
-            <h4 class="display-3 text-black">Tambah Kategori Pengaduan</h4>
-            <h6 class="section-title bg-white text-primary px-3">Form untuk menambah kategori pengaduan</h6>
+            <h4 class="display-3 text-black">Tambah Pengaduan Warga</h4>
+            <h6 class="section-title bg-white text-primary px-3">Form untuk menambah pengaduan baru</h6>
         </div>
         <div class="text-center mt-3">
-            <a href="{{ route('kategori.index') }}" class="btn btn-primary">
+            <a href="{{ route('pengaduan.index') }}" class="btn btn-primary">
                 <i class="far fa-question-circle me-1"></i> Kembali
             </a>
         </div>
@@ -23,43 +23,100 @@
     </div>
 @endif
 
-    <!-- Card Style Form -->
-    <div class="container-fluid py-5 px-4">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="course-item bg-light shadow-sm rounded-3 p-4">
-                    <form action="{{ route('kategori.store') }}" method="POST">
+<!-- Card Style Form -->
+<div class="container-fluid py-5 px-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="course-item bg-light shadow-sm rounded-3 p-4">
+                    <form action="{{ route('pengaduan.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="text-center mb-4">
-                            <h5 class="fw-bold text-dark mb-1">Tambah Kategori Baru</h5>
-                            <small class="text-muted">Isi data kategori sesuai kebutuhan</small>
+                            <h5 class="fw-bold text-dark mb-1">Tambah Pengaduan Baru</h5>
+                            <small class="text-muted">Isi data pengaduan sesuai kebutuhan</small>
                         </div>
 
-                        <!-- Nama Kategori -->
+                        <!-- Nomor Tiket -->
                         <div class="mb-3">
-                            <label for="nama" class="form-label fw-semibold text-primary">Nama Kategori</label>
-                            <input type="text" name="nama" id="nama" class="form-control shadow-sm"
-                                placeholder="Masukkan nama kategori" required>
+                            <label for="nomor_tiket" class="form-label fw-semibold text-primary">Nomor Tiket</label>
+                            <input type="text" name="nomor_tiket" id="nomor_tiket" class="form-control shadow-sm"
+                                placeholder="Masukkan nomor tiket" required>
                         </div>
 
-                        <!-- SLA (Hari) -->
+                        <!-- Warga -->
                         <div class="mb-3">
-                            <label for="sla_hari" class="form-label fw-semibold text-primary">SLA (Hari)</label>
-                            <input type="number" name="sla_hari" id="sla_hari" class="form-control shadow-sm"
-                                placeholder="Masukkan jumlah hari penyelesaian" required min="1">
-                        </div>
-
-                        <!-- Prioritas -->
-                        <div class="mb-4">
-                            <label for="prioritas" class="form-label fw-semibold text-primary">Prioritas</label>
-                            <select name="prioritas" id="prioritas" class="form-select shadow-sm" required>
-                                <option value="">-- Pilih Prioritas --</option>
-                                <option value="Rendah">Rendah</option>
-                                <option value="Sedang">Sedang</option>
-                                <option value="Tinggi">Tinggi</option>
+                            <label for="warga_id" class="form-label fw-semibold text-primary">Warga</label>
+                            <select name="warga_id" id="warga_id" class="form-select shadow-sm" required>
+                                <option value="">-- Pilih Warga --</option>
+                                @foreach($warga as $w)
+                                    <option value="{{ $w->warga_id }}">{{ $w->nama }}</option>
+                                @endforeach
                             </select>
+                        </div>
+
+                        <!-- Kategori -->
+                        <div class="mb-3">
+                            <label for="kategori_id" class="form-label fw-semibold text-primary">Kategori</label>
+                            <select name="kategori_id" id="kategori_id" class="form-select shadow-sm" required>
+                                <option value="">-- Pilih Kategori --</option>
+                                @foreach($kategori as $k)
+                                    <option value="{{ $k->kategori_id }}">{{ $k->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Judul -->
+                        <div class="mb-3">
+                            <label for="judul" class="form-label fw-semibold text-primary">Judul Pengaduan</label>
+                            <input type="text" name="judul" id="judul" class="form-control shadow-sm"
+                                placeholder="Masukkan judul pengaduan" required>
+                        </div>
+
+                        <!-- Deskripsi -->
+                        <div class="mb-3">
+                            <label for="deskripsi" class="form-label fw-semibold text-primary">Deskripsi</label>
+                            <textarea name="deskripsi" id="deskripsi" class="form-control shadow-sm" rows="4" required
+                                placeholder="Tuliskan deskripsi pengaduan"></textarea>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="mb-3">
+                            <label for="status" class="form-label fw-semibold text-primary">Status</label>
+                            <select name="status" id="status" class="form-select shadow-sm" required>
+                                <option value="">-- Pilih Status --</option>
+                                <option value="baru">Baru</option>
+                                <option value="diproses">Proses</option>
+                                <option value="selesai">Selesai</option>
+                            </select>
+                        </div>
+
+                        <!-- Lokasi -->
+                        <div class="mb-3">
+                            <label for="lokasi_text" class="form-label fw-semibold text-primary">Lokasi</label>
+                            <input type="text" name="lokasi_text" id="lokasi_text" class="form-control shadow-sm"
+                                placeholder="Masukkan lokasi pengaduan" required>
+                        </div>
+
+                        <!-- RT & RW -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="rt" class="form-label fw-semibold text-primary">RT</label>
+                                <input type="text" name="rt" id="rt" class="form-control shadow-sm"
+                                    placeholder="Masukkan RT" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="rw" class="form-label fw-semibold text-primary">RW</label>
+                                <input type="text" name="rw" id="rw" class="form-control shadow-sm"
+                                    placeholder="Masukkan RW" required>
+                            </div>
+                        </div>
+
+                        <!-- Upload Media -->
+                        <div class="mb-4">
+                            <label for="media" class="form-label fw-semibold text-primary">Lampiran Bukti (Foto)</label>
+                            <input type="file" name="media[]" id="media" class="form-control shadow-sm" multiple>
+                            <small class="text-muted">Bisa mengunggah lebih dari 1 file</small>
                         </div>
 
                         <!-- Tombol Simpan & Batal -->
@@ -67,10 +124,11 @@
                             <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
                                 <i class="fas fa-save me-1"></i> Simpan
                             </button>
-                            <a href="{{ route('kategori.index') }}" class="btn btn-outline-secondary px-4 rounded-pill">
+                            <a href="{{ route('pengaduan.index') }}" class="btn btn-outline-secondary px-4 rounded-pill">
                                 <i class="fas fa-times me-1"></i> Batal
                             </a>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -79,5 +137,4 @@
 </div>
 <!-- End Card Style Form -->
 
-{{-- end content --}}
 @endsection

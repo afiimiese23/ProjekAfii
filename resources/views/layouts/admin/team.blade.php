@@ -19,7 +19,7 @@
                             </div>
                         </div>
                         <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
+                            <h5 class="mb-0">Afii</h5>
                             <small>Designation</small>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
+                            <h5 class="mb-0">Isan</h5>
                             <small>Designation</small>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
+                            <h5 class="mb-0">Meri</h5>
                             <small>Designation</small>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <div class="text-center p-4">
-                            <h5 class="mb-0">Instructor Name</h5>
+                            <h5 class="mb-0">Azam</h5>
                             <small>Designation</small>
                         </div>
                     </div>

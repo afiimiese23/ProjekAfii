@@ -447,3 +447,83 @@
 .card {
     width: 100%;
 }
+
+.testimonial-carousel .testimonial-item {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.testimonial-item {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+.testimonial-item:hover {
+    transform: translateY(-10px);
+}
+.testimonial-text {
+    border-radius: 10px;
+}
+
+/* === OWL CAROUSEL DOT FIX === */
+.owl-carousel .owl-dots {
+    margin-top: 25px;
+    text-align: center;
+}
+
+.owl-carousel .owl-dot {
+    width: 12px;
+    height: 12px;
+    margin: 0 6px;
+    background: #dcdcdc !important;
+    border-radius: 50%;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.owl-carousel .owl-dot.active {
+    background: #06bbcc !important; /* warna primary */
+    width: 16px;
+}
+
+/* === FIX OWL DOT KETUTUP OVERLAY === */
+.testimonial-carousel {
+    position: relative;
+}
+
+.testimonial-carousel .owl-dots {
+    position: relative;
+    z-index: 5; 
+    margin-top: 30px;
+}
+
+.testimonial-carousel .owl-dot {
+    background: #dcdcdc !important;
+}
+
+.testimonial-carousel .owl-dot.active {
+    background: var(--primary) !important;
+}
+
+.testimonial-carousel .owl-nav {
+    position: absolute;
+    top: -60px;
+    right: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.testimonial-carousel .owl-nav button {
+    width: 40px;
+    height: 40px;
+    background: #06BBCC;
+    color: #FFFFFF;
+    border-radius: 50%;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.testimonial-carousel .owl-nav button:hover {
+    background: #0096a7;
+}

@@ -34,6 +34,20 @@
         <div class="course-item bg-light shadow-sm rounded-3 p-4 mb-4">
 
             <h5 class="fw-bold mb-3 text-dark">Informasi Warga</h5>
+            {{-- Foto Profile --}}
+            <div class="text-center mb-4">
+                @if ($dataWarga->foto_profile)
+                    <img src="{{ Storage::url($dataWarga->foto_profile) }}"
+                        alt="Foto {{ $dataWarga->nama }}"
+                        class="rounded-circle shadow"
+                        style="width:150px; height:150px; object-fit:cover;">
+                @else
+                    <img src="{{ asset('assets/img/default-user.png') }}"
+                        alt="Default Avatar"
+                        class="rounded-circle shadow"
+                        style="width:150px; height:150px; object-fit:cover;">
+                @endif
+            </div>
 
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -79,10 +93,6 @@
                 </a>
             </div>
         </div>
-
-
-
-
         {{-- CARD UPLOAD FILE --}}
         <div class="course-item bg-light shadow-sm rounded-3 p-4 mb-4">
 
@@ -108,12 +118,7 @@
                     <i class="fas fa-upload me-1"></i> Upload
                 </button>
             </form>
-
         </div>
-
-
-
-
         {{-- CARD DAFTAR FILE --}}
         <div class="course-item bg-light shadow-sm rounded-3 p-4 mb-4">
 

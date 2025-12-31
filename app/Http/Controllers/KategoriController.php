@@ -19,7 +19,7 @@ class KategoriController extends Controller
                                 ->paginate(8)
                                 ->withQueryString();
 
-        return view('admin.pengaduan.index', $data);
+        return view('admin.kategori.index', $data);
     }
 
     /**
@@ -27,7 +27,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        return view('admin.pengaduan.create');
+        return view('admin.kategori.create');
     }
 
     /**
@@ -61,7 +61,7 @@ class KategoriController extends Controller
     public function edit($kategori_id)
 {
     $data['dataKategori'] = KategoriPengaduan::findOrFail($kategori_id);
-    return view('admin.pengaduan.edit', $data);
+    return view('admin.kategori.edit', $data);
 }
 
     /**

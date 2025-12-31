@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\PenilaianLayanan;
 
 class DashboardController extends Controller
 {
@@ -11,7 +12,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $testimonials = PenilaianLayanan::with('pengaduan.warga')
+            ->latest()
+            ->take(8)
+            ->get();
+
+        return view('admin.dashboard', compact('testimonials'));
     }
 
     /**

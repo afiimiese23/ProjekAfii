@@ -3,8 +3,8 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
-                    <div class="position-relative h-100">
-                        <img class="img-fluid position-absolute w-100 h-100" src="{{ asset('assets-admin/img/pengaduan.png') }}"
+                    <div class="position-relative h-70">
+                        <img class="img-fluid position-absolute w-70 h-70" src="{{ asset('assets-admin/img/logo.png') }}"
                         alt="" style="object-fit: cover;">
                     </div>
                 </div>

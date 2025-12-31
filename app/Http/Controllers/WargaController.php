@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Warga;
 use App\Models\Multipleupload;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class WargaController extends Controller
 {
-    // INDEX
     public function index(Request $request)
     {
-        $filterableColumns = ['jenis_kelamin'];
-        $searchableColumns = ['nama', 'no_ktp', 'pekerjaan', 'email'];
+        $filterableColumns  = ['jenis_kelamin'];
+        $searchableColumns  = ['nama', 'no_ktp', 'pekerjaan', 'email'];
 
         $data['dataWarga'] = Warga::filter($request, $filterableColumns)
                                 ->search($request, $searchableColumns)
@@ -23,106 +22,140 @@ class WargaController extends Controller
         return view('admin.warga.index', $data);
     }
 
-    // CREATE
     public function create()
     {
         return view('admin.warga.create');
     }
 
-    // STORE WARGA
     public function store(Request $request)
     {
-        $data = $request->only([
-            'no_ktp',
-            'nama',
-            'jenis_kelamin',
-            'agama',
-            'pekerjaan',
-            'phone',
-            'email'
+        $request->validate([
+            'no_ktp'        => 'required',
+            'nama'          => 'required|string|max:255',
+            'jenis_kelamin' => 'required',
+            'agama'         => 'required',
+            'pekerjaan'     => 'required',
+            'phone'         => 'required',
+            'email'         => 'required|email|unique:warga,email',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $warga = Warga::create($data);
+        $data = [
+            'no_ktp'        => $request->no_ktp,
+            'nama'          => $request->nama,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'agama'         => $request->agama,
+            'pekerjaan'     => $request->pekerjaan,
+            'phone'         => $request->phone,
+            'email'         => $request->email,
+        ];
 
-        return redirect()->route('warga.index')
-            ->with('success', 'Data Warga berhasil ditambahkan!');
-    }
+        // KODE BARU: Handle profile picture upload 
+        if ($request->hasFile('profile_picture')) { 
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public'); 
+            $data['profile_picture'] = $path; 
+        } 
 
-    // SHOW DETAIL WARGA + FILE
+        Warga::create($data); 
+
+        return redirect()->route('warga.index')->with('success', 'Penambahan Data Warga Berhasil!'); 
+    } 
+
+
     public function show(string $id)
     {
         $data['dataWarga'] = Warga::with('files')->findOrFail($id);
         return view('admin.warga.show', $data);
     }
 
-    // EDIT
     public function edit(string $id)
     {
         $data['dataWarga'] = Warga::findOrFail($id);
         return view('admin.warga.edit', $data);
     }
 
-    // UPDATE
     public function update(Request $request, string $id)
     {
         $warga = Warga::findOrFail($id);
 
-        $warga->update($request->only([
-            'no_ktp',
-            'nama',
-            'jenis_kelamin',
-            'agama',
-            'pekerjaan',
-            'phone',
-            'email'
-        ]));
+        $request->validate([
+            'no_ktp'        => 'required|string|max:100',
+            'nama'          => 'required|string|max:255|unique:warga,nama,' . $id . ',warga_id',
+            'jenis_kelamin' => 'required|in:Male,Female',
+            'agama'         => 'required|string|max:50',
+            'pekerjaan'     => 'required|string|max:255',
+            'phone'         => 'required|string|max:15',
+            'email'         => 'required|email|max:255|unique:warga,email,' . $id . ',warga_id',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'remove_profile_picture' => 'nullable|boolean',
+        ]);
+
+
+
+        $data = [
+            'no_ktp'        => $request->no_ktp,
+            'nama'          => $request->nama,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'agama'         => $request->agama,
+            'pekerjaan'     => $request->pekerjaan,
+            'phone'         => $request->phone,
+            'email'         => $request->email,
+        ];
+
+        if ($request->filled('password')) { 
+            $data['password'] = Hash::make($request->password); 
+        } 
+
+        if ($request->remove_profile_picture) { 
+            if ($warga->profile_picture) { 
+                Storage::disk('public')->delete($warga->profile_picture); 
+            } 
+            $data['profile_picture'] = null; 
+        } 
+
+        if ($request->hasFile('profile_picture')) { 
+            // Delete old picture if exists 
+            if ($warga->profile_picture) { 
+                Storage::disk('public')->delete($warga->profile_picture); 
+            } 
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public'); 
+            $data['profile_picture'] = $path; 
+        } 
+
+        $warga->update($data);
 
         return redirect()->route('warga.index')
-            ->with('update', 'Data Warga berhasil diperbarui.');
+        ->with('update', 'Data Warga berhasil diperbarui.');
     }
 
-    // UPLOAD MULTIPLE FILE
     public function uploadFiles(Request $request, string $id)
     {
         $request->validate([
-            'files' => 'required',
+            'files'   => 'required',
             'files.*' => 'mimes:jpg,jpeg,png,pdf,doc,docx,txt|max:2048',
         ]);
 
         $warga = Warga::findOrFail($id);
 
-        if ($request->hasfile('files')) {
-            $uploadedFiles = [];
+        $data = [];
 
-            foreach ($request->file('files') as $file) {
-                if ($file->isValid()) {
-                    // Nama file unik
-                    $filename = round(microtime(true) * 1000) . '-' .
-                                str_replace(' ', '-', $file->getClientOriginalName());
+        foreach ($request->file('files') as $file) {
+            $path = $file->store('warga_files', 'public');
 
-                    $path = $file->storeAs('warga_files', $filename, 'public');
-
-                    $uploadedFiles[] = [
-                        'filename'   => $path,
-                        'ref_table'  => 'warga',
-                        'ref_id'     => $warga->warga_id,   // ← SESUAI MODEL
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ];
-                }
-            }
-
-            Multipleupload::insert($uploadedFiles);
-
-            return redirect()->route('warga.show', $id)
-                ->with('success', 'File berhasil diupload!');
+            $data[] = [
+                'filename'   => $path,
+                'ref_table'  => 'warga',
+                'ref_id'     => $warga->warga_id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
         }
 
-        return redirect()->route('warga.show', $id)
-            ->with('error', 'Gagal upload file!');
+        Multipleupload::insert($data);
+
+        return back()->with('success', 'File berhasil diupload!');
     }
 
-    // DELETE FILE
     public function deleteFile(string $wargaId, string $fileId)
     {
         $file = Multipleupload::where('id', $fileId)
@@ -131,17 +164,18 @@ class WargaController extends Controller
             ->firstOrFail();
 
         Storage::disk('public')->delete($file->filename);
-
         $file->delete();
 
-        return redirect()->route('warga.show', $wargaId)
-            ->with('success', 'File berhasil dihapus!');
+        return back()->with('success', 'File berhasil dihapus!');
     }
 
-    // DELETE WARGA + FILE
     public function destroy(string $id)
     {
-        $warga = Warga::findOrFail($id);
+        $warga = Warga::with('files')->findOrFail($id);
+
+        if ($warga->profile_picture) {
+            Storage::disk('public')->delete($warga->profile_picture);
+        }
 
         foreach ($warga->files as $file) {
             Storage::disk('public')->delete($file->filename);

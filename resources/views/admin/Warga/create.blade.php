@@ -29,67 +29,73 @@
             <div class="row justify-content-center">
                 <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="course-item bg-light shadow-sm rounded-3 p-4" style="display: block;">
-                    <form action="{{ route('warga.store') }}" method="POST">
+                    <form action="{{ route('warga.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                            <div class="text-center mb-4">
-                                <h5 class="fw-bold text-dark mb-1">Tambah data warga Baru</h5>
-                                <small class="text-muted">Isi data warga sesuai kebutuhan</small>
-                            </div>
+                        <div class="text-center mb-4">
+                            <h5 class="fw-bold text-dark mb-1">Tambah Data Warga Baru</h5>
+                            <small class="text-muted">Isi data warga sesuai kebutuhan</small>
+                        </div>
 
-                            <!-- No KTP -->
-                            <div class="mb-3">
-                                <label for="no_ktp" class="form-label fw-semibold text-primary">Nomor KTP</label>
-                                <input type="text" name="no_ktp" id="no_ktp" class="form-control shadow-sm"
-                                    placeholder="Masukkan Nomor Ktp Warga" required min="1">
-                            </div>
+                        {{-- FOTO PROFILE --}}
+                        <div class="mb-3"> 
+                            <label for="profile_picture" class="form-label">Foto Profil</label> 
+                            <input type="file" id="profile_picture" name="profile_picture" class="form-control" accept="image/*"> 
+                            <div class="form-text">Format: JPG, PNG, GIF. Maksimal: 2MB</div> 
+                            @error('profile_picture') 
+                                <div class="text-danger small">{{ $message }}</div> 
+                            @enderror 
+                        </div> 
 
-                            <!-- Nama -->
-                            <div class="mb-3">
-                                <label for="nama" class="form-label fw-semibold text-primary">Nama</label>
-                                <input type="text" name="nama" id="nama" class="form-control shadow-sm"
-                                    placeholder="Masukkan Nama Warga" required>
-                            </div>
+                        <!-- No KTP -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-primary">Nomor KTP</label>
+                            <input type="text" name="no_ktp" class="form-control shadow-sm"
+                                placeholder="Masukkan Nomor KTP" required>
+                        </div>
 
-                            <!-- Jenis Kelamin -->
-                            <div class="mb-4">
-                                <label for="jenis_kelamin" class="form-label fw-semibold text-primary">Jenis Kelamin</label>
-                                <select name="jenis_kelamin" id="jenis_kelamin" class="form-select shadow-sm" required>
-                                    <option value="">-- Pilih Jenis Kelamin --</option>
-                                    <option value="male">Laki-Laki</option>
-                                    <option value="female">Perempuan</option>
-                                </select>
-                            </div>
+                        <!-- Nama -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-primary">Nama</label>
+                            <input type="text" name="nama" class="form-control shadow-sm"
+                                placeholder="Masukkan Nama Warga" required>
+                        </div>
 
-                            <!-- Agama -->
-                            <div class="mb-3">
-                                <label for="agama" class="form-label fw-semibold text-primary">Agama</label>
-                                <input type="text" name="agama" id="agama" class="form-control shadow-sm"
-                                    placeholder="Masukkan agama Warga" required min="1">
-                            </div>
-                            
-                            <!-- Pekerjaan -->
-                            <div class="mb-3">
-                                <label for="pekerjaan" class="form-label fw-semibold text-primary">Pekerjaan</label>
-                                <input type="text" name="pekerjaan" id="pekerjaan" class="form-control shadow-sm"
-                                    placeholder="Masukkan Pekerjaan Warga" required min="1">
-                            </div>
+                        <!-- Jenis Kelamin -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-primary">Jenis Kelamin</label>
+                            <select name="jenis_kelamin" class="form-select shadow-sm" required>
+                                <option value="">-- Pilih Jenis Kelamin --</option>
+                                <option value="Male">Laki-Laki</option>
+                                <option value="Female">Perempuan</option>
+                            </select>
+                        </div>
 
-                            <!-- Telephone -->
-                            <div class="mb-3">
-                                <label for="phone" class="form-label fw-semibold text-primary">Nomor Telephone</label>
-                                <input type="text" name="phone" id="phone" class="form-control shadow-sm"
-                                    placeholder="Masukkan Nomor Telephone Warga" required min="1">
-                            </div>
+                        <!-- Agama -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-primary">Agama</label>
+                            <input type="text" name="agama" class="form-control shadow-sm" required>
+                        </div>
 
-                            <!-- Email -->
-                            <div class="mb-3">
-                                <label for="email" class="form-label fw-semibold text-primary">Email</label>
-                                <input type="text" name="email" id="email" class="form-control shadow-sm"
-                                    placeholder="Masukkan Email Warga" required min="1">
-                            </div>
+                        <!-- Pekerjaan -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-primary">Pekerjaan</label>
+                            <input type="text" name="pekerjaan" class="form-control shadow-sm" required>
+                        </div>
 
-                        <!-- Tombol Simpan & Batal -->
+                        <!-- Phone -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-primary">Nomor Telepon</label>
+                            <input type="text" name="phone" class="form-control shadow-sm" required>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold text-primary">Email</label>
+                            <input type="email" name="email" class="form-control shadow-sm" required>
+                        </div>
+
+                        <!-- Tombol -->
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
                                 <i class="fas fa-save me-1"></i> Simpan

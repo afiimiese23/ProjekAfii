@@ -55,7 +55,7 @@
                 <div class="course-item bg-light shadow-sm rounded-3 h-100">
 
                     <div class="text-center p-4 pb-0">
-                        {{-- FOTO PROFILE (LOGIKA TEMANMU) --}}
+                        {{-- FOTO PROFILE --}}
                         @if ($item->profile_picture)
                             <img src="{{ Storage::url($item->profile_picture) }}" 
                                  alt="{{ $item->name }}'s Profile Picture"

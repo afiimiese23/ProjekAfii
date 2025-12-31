@@ -1,6 +1,10 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
 @extends('layouts.admin.app')
 @section('title', 'Data Warga')
 @section('content')
+
     {{-- start content --}}
     <div class="py-4">
         <div class="d-flex justify-content-between w-100 flex-wrap px-4">
@@ -64,6 +68,27 @@
                 <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                     <div class="course-item bg-light shadow-sm rounded-3 h-100">
                         <div class="text-center p-4 pb-0">
+                            {{-- FOTO PROFILE --}}
+                            @if ($item->profile_picture)
+                                @if (Str::startsWith($item->profile_picture, ['http://', 'https://']))
+                                    <img src="{{ $item->profile_picture }}"
+                                        class="rounded-circle mb-3"
+                                        width="80" height="80"
+                                        style="object-fit:cover;">
+                                @else
+                                    <img src="{{ asset('storage/' . $item->profile_picture) }}"
+                                        class="rounded-circle mb-3"
+                                        width="80" height="80"
+                                        style="object-fit:cover;">
+                                @endif
+                            @else
+                                <img src="{{ asset('assets/images/default-avatar.png') }}"
+                                    class="rounded-circle mb-3"
+                                    width="80" height="80"
+                                    style="object-fit:cover;">
+                            @endif
+
+                            {{-- nama --}}
                             <h5 class="mb-2 text-dark fw-bold">{{ $item->nama }}</h5>
 
                             <div class="mb-2">
