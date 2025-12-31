@@ -2,10 +2,6 @@
 @section('title', 'Dashboard Guest')
 @section('content')
 
-	{{-- carousel start --}}
-    @include('layouts.admin.carousel')
-    {{-- carousel end --}}
-
     {{-- service start --}}
     @include('layouts.admin.service')
     {{-- service end --}}

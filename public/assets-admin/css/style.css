@@ -603,3 +603,9 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08) !important;
     }
 }
+
+@media (max-width: 992px) { /* lg breakpoint */
+    .navbar-collapse.collapse {
+        display: none !important;
+    }
+}
