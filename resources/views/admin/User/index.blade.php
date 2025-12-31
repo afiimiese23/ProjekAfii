@@ -3,7 +3,7 @@
 @section('content')
     {{-- start content --}}
     <div class="py-4">
-        <div class="d-flex justify-content-between w-100 flex-wrap">
+        <div class="d-flex justify-content-between align-items-center w-100 flex-wrap text-center text-md-start">
             <div class="mb-3 mb-lg-0">
                 <h4 class="display-3 text-black text-center">Data User</h4>
                 <h6 class="section-title bg-white text-center text-primary px-3">List user yang telah terdaftar</h6>

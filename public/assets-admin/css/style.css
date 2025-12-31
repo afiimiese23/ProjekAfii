@@ -527,3 +527,79 @@
 .testimonial-carousel .owl-nav button:hover {
     background: #0096a7;
 }
+
+/* ============================= */
+/* RESPONSIVE MOBILE OPTIMIZATION */
+/* ============================= */
+
+/* Heading */
+@media (max-width: 576px) {
+    h4.display-3 {
+        font-size: 1.6rem;
+        text-align: center;
+    }
+
+    .section-title {
+        display: block;
+        text-align: center;
+        font-size: 0.85rem;
+    }
+}
+
+/* Container padding mobile */
+@media (max-width: 576px) {
+    .container-fluid {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    .course-item {
+        padding: 1.25rem !important;
+    }
+}
+
+/* Form control */
+@media (max-width: 576px) {
+    .form-control,
+    .form-select {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.75rem;
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+    }
+}
+
+/* Button responsive */
+@media (max-width: 576px) {
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .d-flex.justify-content-center {
+        flex-direction: column;
+    }
+}
+
+/* RT RW agar stack di mobile */
+@media (max-width: 768px) {
+    .row.mb-3 > div {
+        margin-bottom: 0.75rem;
+    }
+}
+
+/* File input */
+@media (max-width: 576px) {
+    input[type="file"] {
+        font-size: 0.8rem;
+    }
+}
+
+/* Card shadow lebih soft di mobile */
+@media (max-width: 576px) {
+    .shadow-sm {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08) !important;
+    }
+}

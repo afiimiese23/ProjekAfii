@@ -3,8 +3,7 @@
 @section('content')
 
 <div class="py-4 px-4">
-
-    <div class="d-flex justify-content-between w-100 flex-wrap mb-4">
+    <div class="d-flex justify-content-between align-items-center w-100 flex-wrap text-center text-md-start mb-4">
         <div>
             <h4 class="display-3 text-black text-center">Detail Tindak Lanjut</h4>
             <h6 class="section-title bg-white text-primary px-3 text-center">

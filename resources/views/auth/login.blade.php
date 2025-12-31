@@ -57,7 +57,7 @@
 
             <!-- Submit -->
             <div class="d-grid">
-                <button type="submit" class="btn btn-gray-800">Sign in</button>
+                <button type="submit" class="btn btn-primary">Sign in</button>
             </div>
         </form>
 
