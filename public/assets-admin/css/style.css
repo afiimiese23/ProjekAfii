@@ -604,8 +604,40 @@
     }
 }
 
-@media (max-width: 992px) { /* lg breakpoint */
-    .navbar-collapse.collapse {
-        display: none !important;
+@media (max-width: 992px) {
+    .navbar-collapse {
+        display: none;
     }
+
+    .navbar-collapse.show {
+        display: block;
+    }
+}
+
+/* ==== FIX NAVBAR MOBILE BOOTSTRAP 5 ==== */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        padding: 1rem;
+        z-index: 1050;
+    }
+
+    .navbar-nav .dropdown-menu {
+        position: static;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
 }

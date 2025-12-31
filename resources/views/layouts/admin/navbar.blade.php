@@ -1,6 +1,6 @@
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top">
-    
+
     {{-- Brand --}}
     <a href="{{ route('dashboard') }}" 
        class="navbar-brand d-flex align-items-center px-4 px-lg-5">
@@ -10,12 +10,16 @@
     </a>
 
     {{-- Toggler --}}
-    <button class="navbar-toggler me-4" 
-            type="button" 
-            data-bs-toggle="collapse" 
-            data-bs-target="#navbarCollapse">
+    <button class="navbar-toggler me-4"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse"
+            aria-controls="navbarCollapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
 
     {{-- Menu --}}
     <div class="collapse navbar-collapse" id="navbarCollapse">
