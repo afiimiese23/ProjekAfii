@@ -2,16 +2,17 @@
 @section('title', 'Edit User')
 @section('content')
 
-{{-- start content --}}
 <div class="py-4">
-    <div class="d-flex justify-content-between align-items-center w-100 flex-wrap text-center text-md-start">
+    <div class="d-flex justify-content-between w-100 flex-wrap">
         <div class="mb-3 mb-lg-0">
             <h4 class="display-3 text-black">Edit User</h4>
-            <h6 class="section-title bg-white text-primary px-3">Form untuk mengedit data User</h6>
+            <h6 class="section-title bg-white text-primary px-3">
+                Form edit data user 
+            </h6>
         </div>
         <div class="text-center mt-3">
             <a href="{{ route('user.index') }}" class="btn btn-primary">
-                <i class="far fa-question-circle me-1"></i> Kembali
+                <i class="fas fa-arrow-left me-1"></i> Kembali
             </a>
         </div>
     </div>
@@ -23,147 +24,158 @@
     </div>
 @endif
 
-<!-- Card Style Form -->
-<div class="container-fluid py-5 px-4">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="course-item bg-light shadow-sm rounded-3 p-4">
-                    <form action="{{ route('user.update', $dataUser->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+<div class="container-fluid py-4 px-4">
+    <div class="card shadow-sm border-0 rounded-3">
 
-                        <div class="text-center mb-4">
-                            <h5 class="fw-bold text-dark mb-1">Edit Detail User</h5>
-                            <small class="text-muted">Ubah data user sesuai kebutuhan</small>
-                        </div>
+        <div class="card-header bg-warning text-dark fw-semibold">
+            <i class="fas fa-user-edit me-2"></i> Form Edit User
+        </div>
 
-                        <!-- FOTO PROFIL -->
-                        <div class="mb-4 text-center">
-                            <label class="form-label d-block fw-semibold text-primary">Foto Profil Saat Ini</label>
+        <div class="card-body">
+            <form action="{{ route('user.update', $dataUser->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
 
-                            <img src="{{ $dataUser->profile_picture_url }}"  
-                                id="profile-picture-preview" 
-                                alt="Profile Picture"  
-                                class="rounded-circle border mb-2" 
-                                width="150"  
-                                height="150" 
-                                style="object-fit: cover;">
-                            
-                            <div class="mt-2">
-                                @if($dataUser->profile_picture)
-                                    <div class="form-check d-flex justify-content-center">
-                                        <input class="form-check-input" type="checkbox"
-                                            name="remove_profile_picture" id="remove_profile_picture" value="1">
-                                        <label class="form-check-label text-danger ms-2" for="remove_profile_picture">
-                                            Hapus Foto Profil
-                                        </label>
-                                    </div>
-                                @else
-                                    <span class="text-muted">Belum ada foto profil</span>
-                                @endif
-                            </div>
-                        </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <tbody>
 
-                        <!-- Upload Foto Profil -->
-                        <div class="mb-3">
-                            <label for="profile_picture" class="form-label fw-semibold text-primary">Upload Foto Profil Baru</label>
-                            <input type="file" id="profile_picture" name="profile_picture" class="form-control shadow-sm"
-                                accept="image/*" onchange="previewImage(this)">
-                            <div class="form-text">Format: JPG, PNG, GIF. Maksimal: 2MB</div>
-                            @error('profile_picture')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            {{-- FOTO PROFIL --}}
+                            <tr>
+                                <th class="bg-light w-25">Foto Profil</th>
+                                <td class="text-center">
+                                    <img src="{{ $dataUser->profile_picture_url }}"
+                                         id="profile-picture-preview"
+                                         class="rounded-circle border mb-3"
+                                         width="140" height="140"
+                                         style="object-fit: cover;">
 
-                        <!-- Name -->
-                        <div class="mb-3">
-                            <label for="name" class="form-label fw-semibold text-primary">Nama Lengkap</label>
-                            <input type="text" name="name" id="name" class="form-control shadow-sm"
-                                value="{{ $dataUser->name }}" required>
-                        </div>
+                                    @if($dataUser->profile_picture)
+                                        <div class="form-check d-flex justify-content-center mb-2">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   name="remove_profile_picture"
+                                                   id="remove_profile_picture"
+                                                   value="1">
+                                            <label class="form-check-label text-danger ms-2">
+                                                Hapus Foto Profil
+                                            </label>
+                                        </div>
+                                    @endif
 
-                        <!-- Email -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label fw-semibold text-primary">Email</label>
-                            <input type="email" name="email" id="email" class="form-control shadow-sm"
-                                value="{{ $dataUser->email }}" required>
-                        </div>
+                                    <input type="file"
+                                           name="profile_picture"
+                                           id="profile_picture"
+                                           class="form-control"
+                                           accept="image/*"
+                                           onchange="previewImage(this)">
+                                    <small class="text-muted">
+                                        JPG, PNG, GIF (Max 2MB)
+                                    </small>
+                                </td>
+                            </tr>
 
-                        <!-- Password Baru -->
-                        <div class="mb-3">
-                            <label for="password" class="form-label fw-semibold text-primary">Password Baru</label>
-                            <input type="password" id="password" class="form-control shadow-sm" name="password"
-                                placeholder="Kosongkan jika tidak ingin mengubah">
-                            @error('password')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            {{-- NAMA --}}
+                            <tr>
+                                <th class="bg-light">Nama Lengkap</th>
+                                <td>
+                                    <input type="text" name="name" class="form-control"
+                                           value="{{ $dataUser->name }}" required>
+                                </td>
+                            </tr>
 
-                        <!-- Konfirmasi Password -->
-                        <div class="mb-3">
-                            <label for="password_confirmation" class="form-label fw-semibold text-primary">Konfirmasi Password Baru</label>
-                            <input type="password" id="password_confirmation" class="form-control shadow-sm"
-                                name="password_confirmation" placeholder="Kosongkan jika tidak ingin mengubah">
-                        </div>
+                            {{-- EMAIL --}}
+                            <tr>
+                                <th class="bg-light">Email</th>
+                                <td>
+                                    <input type="email" name="email" class="form-control"
+                                           value="{{ $dataUser->email }}" required>
+                                </td>
+                            </tr>
 
-                        <!-- Role -->
-                        <div class="mb-3">
-                            <label for="role" class="form-label fw-semibold text-primary">Role</label>
-                            <select name="role" id="role" class="form-control shadow-sm" required>
-                                <option value="">-- Pilih Role --</option>
-                                <option value="admin" {{ $dataUser->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="pelanggan" {{ $dataUser->role == 'pelanggan' ? 'selected' : '' }}>Pelanggan</option>
-                                <option value="mitra" {{ $dataUser->role == 'mitra' ? 'selected' : '' }}>Mitra</option>
-                            </select>
-                            @error('role')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            {{-- PASSWORD BARU --}}
+                            <tr>
+                                <th class="bg-light">Password Baru</th>
+                                <td>
+                                    <input type="password" name="password"
+                                           class="form-control"
+                                           placeholder="Kosongkan jika tidak ingin mengubah">
+                                </td>
+                            </tr>
 
-                        <!-- Tombol Simpan & Batal -->
-                        <div class="d-flex justify-content-center flex-column flex-sm-row">
-                            <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
-                                <i class="fas fa-save me-1"></i> Simpan
-                            </button>
-                            <a href="{{ route('user.index') }}" class="btn btn-outline-secondary px-4 rounded-pill">
-                                <i class="fas fa-times me-1"></i> Batal
-                            </a>
-                        </div>
-                    </form>
-                    
-                    <!-- SCRIPT PREVIEW -->
-                    <script>
-                    function previewImage(input) {
-                        const preview = document.getElementById('profile-picture-preview');
-                        const file = input.files[0];
-                        const reader = new FileReader();
+                            {{-- KONFIRMASI PASSWORD --}}
+                            <tr>
+                                <th class="bg-light">Konfirmasi Password</th>
+                                <td>
+                                    <input type="password"
+                                           name="password_confirmation"
+                                           class="form-control"
+                                           placeholder="Ulangi password baru">
+                                </td>
+                            </tr>
 
-                        reader.onload = function(e) {
-                            preview.src = e.target.result;
-                            document.getElementById('remove_profile_picture')?.checked = false;
-                        }
+                            {{-- ROLE --}}
+                            <tr>
+                                <th class="bg-light">Role</th>
+                                <td>
+                                    <select name="role" class="form-select" required>
+                                        <option value="admin" {{ $dataUser->role == 'admin' ? 'selected' : '' }}>
+                                            Admin
+                                        </option>
+                                        <option value="pelanggan" {{ $dataUser->role == 'pelanggan' ? 'selected' : '' }}>
+                                            Pelanggan
+                                        </option>
+                                        <option value="mitra" {{ $dataUser->role == 'mitra' ? 'selected' : '' }}>
+                                            Mitra
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
 
-                        if (file) {
-                            reader.readAsDataURL(file);
-                        }
-                    }
-                    document.getElementById('remove_profile_picture')?.addEventListener('change', function() {
-                        const preview = document.getElementById('profile-picture-preview');
-                        if (this.checked) {
-                            preview.src = '{{ asset("assets/images/default-avatar.png") }}';
-                            document.getElementById('profile_picture').value = '';
-                        } else {
-                            preview.src = '{{ $dataUser->profile_picture_url }}';
-                        }
-                    });
-                    </script>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+
+                {{-- TOMBOL --}}
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
+                        <i class="fas fa-save me-1"></i> Update
+                    </button>
+                    <a href="{{ route('user.index') }}"
+                       class="btn btn-outline-secondary px-4 rounded-pill">
+                        <i class="fas fa-times me-1"></i> Batal
+                    </a>
+                </div>
+
+            </form>
         </div>
     </div>
 </div>
-<!-- End Card Style Form -->
 
-{{-- end content --}}
+{{-- PREVIEW SCRIPT --}}
+<script>
+function previewImage(input) {
+    const preview = document.getElementById('profile-picture-preview');
+    const file = input.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = e => {
+        preview.src = e.target.result;
+        document.getElementById('remove_profile_picture')?.checked = false;
+    };
+    reader.readAsDataURL(file);
+}
+
+document.getElementById('remove_profile_picture')?.addEventListener('change', function () {
+    const preview = document.getElementById('profile-picture-preview');
+    if (this.checked) {
+        preview.src = '{{ asset("default-avatar.png") }}';
+        document.getElementById('profile_picture').value = '';
+    } else {
+        preview.src = '{{ $dataUser->profile_picture_url }}';
+    }
+});
+</script>
+
 @endsection

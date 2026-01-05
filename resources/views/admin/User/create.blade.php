@@ -2,106 +2,114 @@
 @section('title', 'Tambah User')
 @section('content')
 
-{{-- start content --}}
+{{-- HEADER --}}
 <div class="py-4">
-    <div class="d-flex justify-content-between align-items-center w-100 flex-wrap text-center text-md-start">
+    <div class="d-flex justify-content-between w-100 flex-wrap px-4">
         <div class="mb-3 mb-lg-0">
             <h4 class="display-3 text-black">Tambah User</h4>
-            <h6 class="section-title bg-white text-primary px-3">Form untuk menambah User</h6>
+            <h6 class="section-title bg-white text-primary px-3">
+                Form tambah user 
+            </h6>
         </div>
         <div class="text-center mt-3">
             <a href="{{ route('user.index') }}" class="btn btn-primary">
-                <i class="far fa-question-circle me-1"></i> Kembali
+                <i class="fas fa-arrow-left me-1"></i> Kembali
             </a>
         </div>
     </div>
 </div>
 
+{{-- SUCCESS --}}
 @if (session('success'))
     <div class="alert alert-success text-center mt-3">
         {!! session('success') !!}
     </div>
 @endif
 
-    <!-- Card Style Form -->
-    <div class="container-fluid py-5 px-4">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="course-item bg-light shadow-sm rounded-3 p-4">
-                    <form action="{{ route('user.store') }}" method="POST">
-                        @csrf
+{{-- FORM --}}
+<div class="container-fluid py-4 px-4">
+    <div class="card shadow-sm border-0 rounded-3">
 
-                        <div class="text-center mb-4">
-                            <h5 class="fw-bold text-dark mb-1">Tambah User Baru</h5>
-                            <small class="text-muted">Isi data User sesuai kebutuhan</small>
-                        </div>
+        <div class="card-header bg-primary text-white fw-semibold">
+            <i class="fas fa-user-plus me-2"></i> Form Tambah User
+        </div>
 
-                        <!-- Name -->
-                        <div class="mb-3">
-                            <label for="name" class="form-label fw-semibold text-primary">Nama Lengkap</label>
-                            <input name="name" type="text" id="name" class="form-control shadow-sm" required>
-                        </div>
+        <div class="card-body">
+            <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-                        <!-- Email -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label fw-semibold text-primary">Email</label>
-                            <input type="email" name="email" id="email" class="form-control shadow-sm" required>
-                        </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <tbody>
 
-                        <!-- Password -->
-                        <div class="mb-3">
-                            <label for="password" class="form-label fw-semibold text-primary">Password</label>
-                            <input name="password" type="password" id="password" class="form-control shadow-sm" required>
-                        </div>
+                            <tr>
+                                <th class="bg-light w-25">Nama Lengkap</th>
+                                <td>
+                                    <input type="text" name="name" class="form-control"
+                                           value="{{ old('name') }}" required>
+                                </td>
+                            </tr>
 
-                        {{-- FOTO PROFILE --}}
-                        <div class="mb-3"> 
-                            <label for="profile_picture" class="form-label">Foto Profil</label> 
-                            <input type="file" id="profile_picture" name="profile_picture" class="form-control" accept="image/*"> 
-                            <div class="form-text">Format: JPG, PNG, GIF. Maksimal: 2MB</div> 
-                            @error('profile_picture') 
-                                <div class="text-danger small">{{ $message }}</div> 
-                            @enderror 
-                        </div> 
+                            <tr>
+                                <th class="bg-light">Email</th>
+                                <td>
+                                    <input type="email" name="email" class="form-control"
+                                           value="{{ old('email') }}" required>
+                                </td>
+                            </tr>
 
-                        <!-- Role (BARU DITAMBAH) -->
-                        <div class="mb-3">
-                            <label for="role" class="form-label fw-semibold text-primary">Role</label>
-                            <select id="role" name="role" class="form-control shadow-sm" required>
-                                <option value="">-- Pilih Role --</option>
-                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="pelanggan" {{ old('role') == 'pelanggan' ? 'selected' : '' }}>Pelanggan</option>
-                                <option value="mitra" {{ old('role') == 'mitra' ? 'selected' : '' }}>Mitra</option>
-                            </select>
-                            @error('role')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            <tr>
+                                <th class="bg-light">Password</th>
+                                <td>
+                                    <input type="password" name="password" class="form-control" required>
+                                </td>
+                            </tr>
 
-                        <!-- Password Confirmation -->
-                        <div class="mb-4">
-                            <label for="password_confirmation" class="form-label fw-semibold text-primary">Konfirmasi Password</label>
-                            <input name="password_confirmation" type="password" id="password_confirmation"
-                                class="form-control shadow-sm" required>
-                        </div>
+                            <tr>
+                                <th class="bg-light">Konfirmasi Password</th>
+                                <td>
+                                    <input type="password" name="password_confirmation"
+                                           class="form-control" required>
+                                </td>
+                            </tr>
 
-                        <!-- Tombol Simpan & Batal -->
-                        <div class="d-flex justify-content-center flex-column flex-sm-row">
-                            <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
-                                <i class="fas fa-save me-1"></i> Simpan
-                            </button>
-                            <a href="{{ route('user.index') }}" class="btn btn-outline-secondary px-4 rounded-pill">
-                                <i class="fas fa-times me-1"></i> Batal
-                            </a>
-                        </div>
-                    </form>
+                            <tr>
+                                <th class="bg-light">Role</th>
+                                <td>
+                                    <select name="role" class="form-select" required>
+                                        <option value="">-- Pilih Role --</option>
+                                        <option value="admin" {{ old('role')=='admin'?'selected':'' }}>Admin</option>
+                                        <option value="pelanggan" {{ old('role')=='pelanggan'?'selected':'' }}>Pelanggan</option>
+                                        <option value="mitra" {{ old('role')=='mitra'?'selected':'' }}>Mitra</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="bg-light">Foto Profil</th>
+                                <td>
+                                    <input type="file" name="profile_picture" class="form-control">
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+
+                {{-- ACTION --}}
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
+                        <i class="fas fa-save me-1"></i> Simpan
+                    </button>
+                    <a href="{{ route('user.index') }}"
+                       class="btn btn-outline-secondary px-4 rounded-pill">
+                        <i class="fas fa-times me-1"></i> Batal
+                    </a>
+                </div>
+
+            </form>
         </div>
     </div>
 </div>
-<!-- End Card Style Form -->
 
-{{-- end content --}}
 @endsection

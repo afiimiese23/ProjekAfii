@@ -11,9 +11,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TindakLanjutController;
 use App\Http\Controllers\PenilaianLayananController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+
 Route::get('/anggota', function () {
     return view('anggota');
    });
@@ -21,8 +23,13 @@ Route::get('/ketua', function () {
     return view('ketua');
 });
 
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
+    ->middleware('auth')
+    ->name('dashboard');
 
 //kategori pengaduan
 Route::resource('kategori', KategoriController::class);
@@ -82,6 +89,3 @@ Route::get('/login', function () {
 })->name('login');
 Route::get('/register', [AuthController::class, 'create'])->name('register');
 Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
-
-//auto dashboard
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

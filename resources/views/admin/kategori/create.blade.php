@@ -2,16 +2,17 @@
 @section('title', 'Tambah Kategori Pengaduan')
 @section('content')
 
-{{-- start content --}}
 <div class="py-4">
     <div class="d-flex justify-content-between w-100 flex-wrap">
         <div class="mb-3 mb-lg-0">
             <h4 class="display-3 text-black">Tambah Kategori Pengaduan</h4>
-            <h6 class="section-title bg-white text-primary px-3">Form untuk menambah kategori pengaduan</h6>
+            <h6 class="section-title bg-white text-primary px-3">
+                Form tambah kategori pengaduan
+            </h6>
         </div>
         <div class="text-center mt-3">
             <a href="{{ route('kategori.index') }}" class="btn btn-primary">
-                <i class="far fa-question-circle me-1"></i> Kembali
+                <i class="fas fa-arrow-left me-1"></i> Kembali
             </a>
         </div>
     </div>
@@ -23,61 +24,65 @@
     </div>
 @endif
 
-    <!-- Card Style Form -->
-    <div class="container-fluid py-5 px-4">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="course-item bg-light shadow-sm rounded-3 p-4">
-                    <form action="{{ route('kategori.store') }}" method="POST">
-                        @csrf
+<div class="container-fluid py-4 px-4">
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-header bg-primary text-white fw-semibold">
+            <i class="fas fa-table me-2"></i> Form Tambah Kategori
+        </div>
 
-                        <div class="text-center mb-4">
-                            <h5 class="fw-bold text-dark mb-1">Tambah Kategori Baru</h5>
-                            <small class="text-muted">Isi data kategori sesuai kebutuhan</small>
-                        </div>
+        <div class="card-body">
+            <form action="{{ route('kategori.store') }}" method="POST">
+                @csrf
 
-                        <!-- Nama Kategori -->
-                        <div class="mb-3">
-                            <label for="nama" class="form-label fw-semibold text-primary">Nama Kategori</label>
-                            <input type="text" name="nama" id="nama" class="form-control shadow-sm"
-                                placeholder="Masukkan nama kategori" required>
-                        </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <tbody>
+                            <!-- Nama Kategori -->
+                            <tr>
+                                <th class="bg-light w-25">Nama Kategori</th>
+                                <td>
+                                    <input type="text" name="nama" class="form-control"
+                                           placeholder="Masukkan nama kategori" required>
+                                </td>
+                            </tr>
 
-                        <!-- SLA (Hari) -->
-                        <div class="mb-3">
-                            <label for="sla_hari" class="form-label fw-semibold text-primary">SLA (Hari)</label>
-                            <input type="number" name="sla_hari" id="sla_hari" class="form-control shadow-sm"
-                                placeholder="Masukkan jumlah hari penyelesaian" required min="1">
-                        </div>
+                            <!-- SLA -->
+                            <tr>
+                                <th class="bg-light">SLA (Hari)</th>
+                                <td>
+                                    <input type="number" name="sla_hari" class="form-control"
+                                           placeholder="Jumlah hari penyelesaian" min="1" required>
+                                </td>
+                            </tr>
 
-                        <!-- Prioritas -->
-                        <div class="mb-4">
-                            <label for="prioritas" class="form-label fw-semibold text-primary">Prioritas</label>
-                            <select name="prioritas" id="prioritas" class="form-select shadow-sm" required>
-                                <option value="">-- Pilih Prioritas --</option>
-                                <option value="Rendah">Rendah</option>
-                                <option value="Sedang">Sedang</option>
-                                <option value="Tinggi">Tinggi</option>
-                            </select>
-                        </div>
-
-                        <!-- Tombol Simpan & Batal -->
-                        <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
-                                <i class="fas fa-save me-1"></i> Simpan
-                            </button>
-                            <a href="{{ route('kategori.index') }}" class="btn btn-outline-secondary px-4 rounded-pill">
-                                <i class="fas fa-times me-1"></i> Batal
-                            </a>
-                        </div>
-                    </form>
+                            <!-- Prioritas -->
+                            <tr>
+                                <th class="bg-light">Prioritas</th>
+                                <td>
+                                    <select name="prioritas" class="form-select" required>
+                                        <option value="">-- Pilih Prioritas --</option>
+                                        <option value="Rendah">Rendah</option>
+                                        <option value="Sedang">Sedang</option>
+                                        <option value="Tinggi">Tinggi</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+
+                <!-- Tombol -->
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
+                        <i class="fas fa-save me-1"></i> Simpan
+                    </button>
+                    <a href="{{ route('kategori.index') }}" class="btn btn-outline-secondary px-4 rounded-pill">
+                        <i class="fas fa-times me-1"></i> Batal
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-<!-- End Card Style Form -->
 
-{{-- end content --}}
 @endsection

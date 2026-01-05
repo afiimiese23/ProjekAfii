@@ -642,4 +642,173 @@
     }
 }
 
+/* ========== SIDEBAR ========== */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+    background: #fff;
+    overflow-y: auto;
+}
 
+/* HEADER */
+.sidebar-header {
+    text-align: center;
+    padding: 20px 10px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.sidebar-header img {
+    max-width: 60px;
+}
+
+.sidebar-header h5 {
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+/* MENU */
+.sidebar-menu {
+    padding: 15px;
+}
+
+.sidebar-menu .menu-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #6c757d;
+    margin: 15px 0 8px;
+}
+
+/* ITEM */
+.sidebar-menu .menu-item {
+    display: flex;              /* 🔑 BIKIN ICON + TEKS RAPI */
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    color: #333;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    font-size: 14px;
+}
+
+.sidebar-menu .menu-item i {
+    min-width: 18px;
+    text-align: center;
+    font-size: 15px;
+}
+
+/* HOVER + ACTIVE */
+.sidebar-menu .menu-item:hover,
+.sidebar-menu .menu-item.active {
+    background: #07bbcc;
+    color: #fff;
+}
+
+/* ========== CONTENT ========== */
+.admin-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+/* FOOTER */
+.admin-wrapper footer {
+    width: 100%;
+}
+
+:root {
+    --primary-color: #07bbcc; 
+    --primary-dark: #0bb3d8;
+    --primary-soft: #e7f9fc;
+}
+
+:root {
+    --admin-primary: #07bbcc;
+    --admin-primary-dark: #09a3c4;
+}
+
+.dashboard-card {
+    background-color: var(--admin-primary);
+    color: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+.dashboard-card:hover {
+    background-color: var(--admin-primary-dark);
+    transform: translateY(-2px);
+}
+
+.dashboard-card .card-footer {
+    background: rgba(0, 0, 0, 0.08);
+    border-top: none;
+}
+
+.dashboard-card a {
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.dashboard-card a:hover {
+    text-decoration: underline;
+}
+
+.admin-wrapper {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+}
+
+.admin-main {
+    margin-left: 250px; 
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    background: #f8f9fa;
+}
+
+.admin-main .container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.navbar-dashboard {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #181d38;
+}
+
+.breadcrumb {
+    font-size: 13px;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color: #06bbcc;
+}
+
+.page-search {
+    width: 280px;
+}
+
+.page-search input {
+    font-size: 14px;
+    height: 38px;
+}

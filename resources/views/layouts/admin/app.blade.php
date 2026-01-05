@@ -24,30 +24,35 @@
     <!-- Custom CSS -->
     @include('layouts.admin.css')
 </head>
+    <body>
+        <div class="admin-wrapper d-flex">
 
-<body>
+            {{-- SIDEBAR --}}
+            @include('layouts.admin.sidebar')
 
-    @include('layouts.admin.navbar')
+            {{-- MAIN AREA --}}
+            <div class="admin-main flex-grow-1">
 
-    <main class="content">
-        <div class="container-fluid">
-            @yield('content')
+                {{-- HEADER --}}
+                @include('layouts.admin.header')
+
+                {{-- CONTENT --}}
+                <main class="admin-content p-4">
+                    @yield('content')
+                </main>
+
+                {{-- FOOTER --}}
+                @include('layouts.admin.footer')
+
+            </div>
+
         </div>
-    </main>
 
-    @include('layouts.admin.footer')
+        <!-- Scripts -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        @include('layouts.admin.js')
 
-    <!-- jQuery (WAJIB sebelum Owl) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Owl Carousel JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Custom JS -->
-    @include('layouts.admin.js')
-
-</body>
+    </body>
 </html>

@@ -1,190 +1,201 @@
 @extends('layouts.admin.app')
 @section('title', 'Edit Data Warga')
 @section('content')
-    {{-- start content --}}
-    <div class="py-4">
-        <div class="d-flex justify-content-between align-items-center w-100 flex-wrap text-center text-md-start">
-            <div class="mb-3 mb-lg-0">
-                <h4 class="display-3 text-black">Edit Data Warga</h4>
-                <h6 class="section-title bg-white text-primary px-3">Form untuk Mengedit Data Warga</h6>
-            </div>
-            <div class="text-center mt-3">
-                <a href="{{ route('warga.index') }}" class="btn btn-primary">
-                    <i class="far fa-question-circle me-1"></i> Kembali
-                </a>
-            </div>
+
+<div class="py-4">
+    <div class="d-flex justify-content-between w-100 flex-wrap">
+        <div class="mb-3 mb-lg-0">
+            <h4 class="display-3 text-black">Edit Data Warga</h4>
+            <h6 class="section-title bg-white text-primary px-3">
+                Form edit data warga
+            </h6>
+        </div>
+        <div class="text-center mt-3">
+            <a href="{{ route('warga.index') }}" class="btn btn-primary">
+                <i class="fas fa-arrow-left me-1"></i> Kembali
+            </a>
         </div>
     </div>
+</div>
 
-    @if (session('success'))
-        <div class="alert alert-success text-center mt-3">
-            {!! session('success') !!}
+@if (session('success'))
+    <div class="alert alert-success text-center mt-3">
+        {!! session('success') !!}
+    </div>
+@endif
+
+<div class="container-fluid py-4 px-4">
+    <div class="card shadow-sm border-0 rounded-3">
+
+        <div class="card-header bg-warning text-dark fw-semibold">
+            <i class="fas fa-user-edit me-2"></i> Edit Data Warga
         </div>
-    @endif
 
-    <!-- Card Style Form -->
-    <div class="container-fluid py-5 px-4">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="course-item bg-light shadow-sm rounded-3 p-4">
-                        <form action="{{ route('warga.update', $dataWarga->warga_id) }}"
-                            method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
+        <div class="card-body">
+            <form action="{{ route('warga.update', $dataWarga->warga_id) }}"
+                  method="POST"
+                  enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
 
-                            <div class="text-center mb-4">
-                                <h5 class="fw-bold text-dark mb-1">Edit Data Warga</h5>
-                                <small class="text-muted">Ubah data Warga sesuai kebutuhan</small>
-                            </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <tbody>
 
-                        <!-- FOTO PROFIL -->
-                        <div class="mb-4 text-center">
-                            <label class="form-label d-block fw-semibold text-primary">Foto Profil Saat Ini</label>
-                            <img src="{{ $dataWarga->profile_picture_url }}"  
-                                id="profile-picture-preview" 
-                                alt="Profile Picture"  
-                                class="rounded-circle border mb-2" 
-                                width="150"  
-                                height="150" 
-                                style="object-fit: cover;">
-                            <div class="mt-2">
-                                @if($dataWarga->profile_picture)
-                                    <div class="form-check d-flex justify-content-center">
-                                        <input class="form-check-input" type="checkbox"
-                                            name="remove_profile_picture" id="remove_profile_picture" value="1">
-                                        <label class="form-check-label text-danger ms-2" for="remove_profile_picture">
-                                            Hapus Foto Profil
-                                        </label>
-                                    </div>
-                                @else
-                                    <span class="text-muted">Belum ada foto profil</span>
-                                @endif
-                            </div>
-                        </div>
+                            {{-- FOTO PROFIL --}}
+                            <tr>
+                                <th class="bg-light w-25">Foto Profil</th>
+                                <td class="text-center">
+                                    <img src="{{ $dataWarga->profile_picture_url }}"
+                                         id="profile-picture-preview"
+                                         class="rounded-circle border mb-3"
+                                         width="140" height="140"
+                                         style="object-fit: cover;">
 
-                        <!-- Upload Foto Profil -->
-                        <div class="mb-3">
-                            <label for="profile_picture" class="form-label fw-semibold text-primary">Upload Foto Profil Baru</label>
-                            <input type="file" id="profile_picture" name="profile_picture" class="form-control shadow-sm"
-                                accept="image/*" onchange="previewImage(this)">
-                            <div class="form-text">Format: JPG, PNG, GIF. Maksimal: 2MB</div>
-                            @error('profile_picture')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
+                                    @if($dataWarga->profile_picture)
+                                        <div class="form-check d-flex justify-content-center mb-2">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   name="remove_profile_picture"
+                                                   id="remove_profile_picture"
+                                                   value="1">
+                                            <label class="form-check-label text-danger ms-2">
+                                                Hapus Foto Profil
+                                            </label>
+                                        </div>
+                                    @endif
 
-                            <!-- No KTP -->
-                            <div class="mb-3">
-                                <label for="no_ktp" class="form-label fw-semibold text-primary">Nomor KTP</label>
-                                <input type="text" name="no_ktp" id="no_ktp" class="form-control shadow-sm"
-                                    value="{{ $dataWarga->no_ktp }}" required>
-                            </div>
+                                    <input type="file"
+                                           name="profile_picture"
+                                           id="profile_picture"
+                                           class="form-control"
+                                           accept="image/*"
+                                           onchange="previewImage(this)">
+                                    <small class="text-muted">
+                                        JPG, PNG, GIF (Max 2MB)
+                                    </small>
+                                </td>
+                            </tr>
 
-                            <!-- Nama -->
-                            <div class="mb-3">
-                                <label for="nama" class="form-label fw-semibold text-primary">Nama</label>
-                                <input type="text" name="nama" id="nama" class="form-control shadow-sm"
-                                    value="{{ $dataWarga->nama }}" required>
-                            </div>
+                            {{-- NO KTP --}}
+                            <tr>
+                                <th class="bg-light">Nomor KTP</th>
+                                <td>
+                                    <input type="text" name="no_ktp"
+                                           class="form-control"
+                                           value="{{ $dataWarga->no_ktp }}" required>
+                                </td>
+                            </tr>
 
-                            <!-- Jenis Kelamin -->
-                            <div class="mb-3">
-                                <label for="jenis_kelamin" class="form-label fw-semibold text-primary">
-                                    Jenis Kelamin
-                                </label>
+                            {{-- NAMA --}}
+                            <tr>
+                                <th class="bg-light">Nama</th>
+                                <td>
+                                    <input type="text" name="nama"
+                                           class="form-control"
+                                           value="{{ $dataWarga->nama }}" required>
+                                </td>
+                            </tr>
 
-                                <select name="jenis_kelamin" id="jenis_kelamin" class="form-select shadow-sm">
-                                    <option value="">-- Pilih Jenis Kelamin --</option>
+                            {{-- JENIS KELAMIN --}}
+                            <tr>
+                                <th class="bg-light">Jenis Kelamin</th>
+                                <td>
+                                    <select name="jenis_kelamin" class="form-select" required>
+                                        <option value="Male" {{ $dataWarga->jenis_kelamin == 'Male' ? 'selected' : '' }}>
+                                            Laki-Laki
+                                        </option>
+                                        <option value="Female" {{ $dataWarga->jenis_kelamin == 'Female' ? 'selected' : '' }}>
+                                            Perempuan
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
 
-                                    <option value="Male"
-                                        {{ old('jenis_kelamin', $dataWarga->jenis_kelamin) == 'Male' ? 'selected' : '' }}>
-                                        Laki-Laki
-                                    </option>
+                            {{-- AGAMA --}}
+                            <tr>
+                                <th class="bg-light">Agama</th>
+                                <td>
+                                    <input type="text" name="agama"
+                                           class="form-control"
+                                           value="{{ $dataWarga->agama }}" required>
+                                </td>
+                            </tr>
 
-                                    <option value="Female"
-                                        {{ old('jenis_kelamin', $dataWarga->jenis_kelamin) == 'Female' ? 'selected' : '' }}>
-                                        Perempuan
-                                    </option>
-                                </select>
+                            {{-- PEKERJAAN --}}
+                            <tr>
+                                <th class="bg-light">Pekerjaan</th>
+                                <td>
+                                    <input type="text" name="pekerjaan"
+                                           class="form-control"
+                                           value="{{ $dataWarga->pekerjaan }}" required>
+                                </td>
+                            </tr>
 
-                                @error('jenis_kelamin')
-                                    <div class="text-danger small">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            {{-- TELEPON --}}
+                            <tr>
+                                <th class="bg-light">Nomor Telepon</th>
+                                <td>
+                                    <input type="text" name="phone"
+                                           class="form-control"
+                                           value="{{ $dataWarga->phone }}" required>
+                                </td>
+                            </tr>
 
-                            <!-- Agama -->
-                            <div class="mb-3">
-                                <label for="agama" class="form-label fw-semibold text-primary">Agama</label>
-                                <input type="text" name="agama" id="agama" class="form-control shadow-sm"
-                                    value="{{ $dataWarga->agama }}" required>
-                            </div>
-                            
-                            <!-- Pekerjaan -->
-                            <div class="mb-3">
-                                <label for="pekerjaan" class="form-label fw-semibold text-primary">Pekerjaan</label>
-                                <input type="text" name="pekerjaan" id="pekerjaan" class="form-control shadow-sm"
-                                    value="{{ $dataWarga->pekerjaan }}" required>
-                            </div>
+                            {{-- EMAIL --}}
+                            <tr>
+                                <th class="bg-light">Email</th>
+                                <td>
+                                    <input type="email" name="email"
+                                           class="form-control"
+                                           value="{{ $dataWarga->email }}" required>
+                                </td>
+                            </tr>
 
-                            <!-- Telephone -->
-                            <div class="mb-3">
-                                <label for="phone" class="form-label fw-semibold text-primary">Nomor Telephone</label>
-                                <input type="text" name="phone" id="phone" class="form-control shadow-sm"
-                                    value="{{ $dataWarga->phone }}" required>
-                            </div>
-
-                            <!-- Email -->
-                            <div class="mb-3">
-                                <label for="email" class="form-label fw-semibold text-primary">Email</label>
-                                <input type="text" name="email" id="email" class="form-control shadow-sm"
-                                    value="{{ $dataWarga->email }}" required>
-                            </div>
-
-                            <!-- Tombol Simpan & Batal -->
-                            <div class="d-flex justify-content-center flex-column flex-sm-row">
-                                <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
-                                    <i class="fas fa-save me-1"></i> Simpan
-                                </button>
-                                <a href="{{ route('warga.index') }}" class="btn btn-outline-secondary px-4 rounded-pill">
-                                    <i class="fas fa-times me-1"></i> Batal
-                                </a>
-                            </div>
-                        </form>        
-                        
-                        <!-- SCRIPT PREVIEW -->
-                        <script>
-                        function previewImage(input) {
-                            const preview = document.getElementById('profile-picture-preview');
-                            const file = input.files[0];
-                            const reader = new FileReader();
-
-                            reader.onload = function(e) {
-                                preview.src = e.target.result;
-                                document.getElementById('remove_profile_picture')?.checked = false;
-                            }
-
-                            if (file) {
-                                reader.readAsDataURL(file);
-                            }
-                        }
-                        document.getElementById('remove_profile_picture')?.addEventListener('change', function() {
-                            const preview = document.getElementById('profile-picture-preview');
-                            if (this.checked) {
-                                preview.src = '{{ asset("assets/images/default-avatar.png") }}';
-                                document.getElementById('profile_picture').value = '';
-                            } else {
-                                preview.src = '{{ $dataWarga->profile_picture_url }}';
-                            }
-                        });
-                        </script>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+
+                {{-- TOMBOL --}}
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
+                        <i class="fas fa-save me-1"></i> Update
+                    </button>
+                    <a href="{{ route('warga.index') }}"
+                       class="btn btn-outline-secondary px-4 rounded-pill">
+                        <i class="fas fa-times me-1"></i> Batal
+                    </a>
+                </div>
+
+            </form>
         </div>
     </div>
-    <!-- End Card Style Form -->
+</div>
 
-    {{-- end content --}}
+{{-- PREVIEW SCRIPT --}}
+<script>
+function previewImage(input) {
+    const preview = document.getElementById('profile-picture-preview');
+    const file = input.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = e => {
+        preview.src = e.target.result;
+        document.getElementById('remove_profile_picture')?.checked = false;
+    };
+    reader.readAsDataURL(file);
+}
+
+document.getElementById('remove_profile_picture')?.addEventListener('change', function () {
+    const preview = document.getElementById('profile-picture-preview');
+    if (this.checked) {
+        preview.src = '{{ asset("assets/images/default-avatar.png") }}';
+        document.getElementById('profile_picture').value = '';
+    } else {
+        preview.src = '{{ $dataWarga->profile_picture_url }}';
+    }
+});
+</script>
+
 @endsection

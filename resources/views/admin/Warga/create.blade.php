@@ -2,115 +2,169 @@
 @section('title', 'Tambah Warga Pengaduan')
 @section('content')
 
-{{-- start content --}}
+{{-- HEADER --}}
 <div class="py-4">
-    <div class="d-flex justify-content-between align-items-center w-100 flex-wrap text-center text-md-start">
+    <div class="d-flex justify-content-between w-100 flex-wrap px-4">
         <div class="mb-3 mb-lg-0">
             <h4 class="display-3 text-black">Tambah Warga Pengaduan</h4>
-            <h6 class="section-title bg-white text-primary px-3">Form untuk menambah Data Warga</h6>
+            <h6 class="section-title bg-white text-primary px-3">
+                Form tambah data warga
+            </h6>
         </div>
         <div class="text-center mt-3">
             <a href="{{ route('warga.index') }}" class="btn btn-primary">
-                <i class="far fa-question-circle me-1"></i> Kembali
+                <i class="fas fa-arrow-left me-1"></i> Kembali
             </a>
         </div>
     </div>
 </div>
 
+{{-- SUCCESS --}}
 @if (session('success'))
     <div class="alert alert-success text-center mt-3">
         {!! session('success') !!}
     </div>
 @endif
 
-    <!-- Card Style Form -->
-    <div class="container-fluid py-5 px-4">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="course-item bg-light shadow-sm rounded-3 p-4" style="display: block;">
-                    <form action="{{ route('warga.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
+{{-- FORM --}}
+<div class="container-fluid py-4 px-4">
+    <div class="card shadow-sm border-0 rounded-3">
 
-                        <div class="text-center mb-4">
-                            <h5 class="fw-bold text-dark mb-1">Tambah Data Warga Baru</h5>
-                            <small class="text-muted">Isi data warga sesuai kebutuhan</small>
-                        </div>
+        <div class="card-header bg-primary text-white fw-semibold">
+            <i class="fas fa-users me-2"></i> Form Tambah Warga
+        </div>
 
-                        {{-- FOTO PROFILE --}}
-                        <div class="mb-3"> 
-                            <label for="profile_picture" class="form-label">Foto Profil</label> 
-                            <input type="file" id="profile_picture" name="profile_picture" class="form-control" accept="image/*"> 
-                            <div class="form-text">Format: JPG, PNG, GIF. Maksimal: 2MB</div> 
-                            @error('profile_picture') 
-                                <div class="text-danger small">{{ $message }}</div> 
-                            @enderror 
-                        </div> 
+        <div class="card-body">
+            <form action="{{ route('warga.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-                        <!-- No KTP -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-primary">Nomor KTP</label>
-                            <input type="text" name="no_ktp" class="form-control shadow-sm"
-                                placeholder="Masukkan Nomor KTP" required>
-                        </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <tbody>
 
-                        <!-- Nama -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-primary">Nama</label>
-                            <input type="text" name="nama" class="form-control shadow-sm"
-                                placeholder="Masukkan Nama Warga" required>
-                        </div>
+                            {{-- FOTO --}}
+                            <tr>
+                                <th class="bg-light w-25">Foto Profil</th>
+                                <td>
+                                    <input type="file"
+                                           name="profile_picture"
+                                           class="form-control"
+                                           accept="image/*">
+                                    <small class="text-muted">
+                                        JPG, PNG, GIF (Max 2MB)
+                                    </small>
+                                    @error('profile_picture')
+                                        <div class="text-danger small">{{ $message }}</div>
+                                    @enderror
+                                </td>
+                            </tr>
 
-                        <!-- Jenis Kelamin -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-primary">Jenis Kelamin</label>
-                            <select name="jenis_kelamin" class="form-select shadow-sm" required>
-                                <option value="">-- Pilih Jenis Kelamin --</option>
-                                <option value="Male">Laki-Laki</option>
-                                <option value="Female">Perempuan</option>
-                            </select>
-                        </div>
+                            {{-- KTP --}}
+                            <tr>
+                                <th class="bg-light">Nomor KTP</th>
+                                <td>
+                                    <input type="text"
+                                           name="no_ktp"
+                                           class="form-control"
+                                           value="{{ old('no_ktp') }}"
+                                           required>
+                                </td>
+                            </tr>
 
-                        <!-- Agama -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-primary">Agama</label>
-                            <input type="text" name="agama" class="form-control shadow-sm" required>
-                        </div>
+                            {{-- NAMA --}}
+                            <tr>
+                                <th class="bg-light">Nama</th>
+                                <td>
+                                    <input type="text"
+                                           name="nama"
+                                           class="form-control"
+                                           value="{{ old('nama') }}"
+                                           required>
+                                </td>
+                            </tr>
 
-                        <!-- Pekerjaan -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-primary">Pekerjaan</label>
-                            <input type="text" name="pekerjaan" class="form-control shadow-sm" required>
-                        </div>
+                            {{-- JK --}}
+                            <tr>
+                                <th class="bg-light">Jenis Kelamin</th>
+                                <td>
+                                    <select name="jenis_kelamin" class="form-select" required>
+                                        <option value="">-- Pilih --</option>
+                                        <option value="Male" {{ old('jenis_kelamin')=='Male'?'selected':'' }}>
+                                            Laki-laki
+                                        </option>
+                                        <option value="Female" {{ old('jenis_kelamin')=='Female'?'selected':'' }}>
+                                            Perempuan
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
 
-                        <!-- Phone -->
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold text-primary">Nomor Telepon</label>
-                            <input type="text" name="phone" class="form-control shadow-sm" required>
-                        </div>
+                            {{-- AGAMA --}}
+                            <tr>
+                                <th class="bg-light">Agama</th>
+                                <td>
+                                    <input type="text"
+                                           name="agama"
+                                           class="form-control"
+                                           value="{{ old('agama') }}"
+                                           required>
+                                </td>
+                            </tr>
 
-                        <!-- Email -->
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold text-primary">Email</label>
-                            <input type="email" name="email" class="form-control shadow-sm" required>
-                        </div>
+                            {{-- PEKERJAAN --}}
+                            <tr>
+                                <th class="bg-light">Pekerjaan</th>
+                                <td>
+                                    <input type="text"
+                                           name="pekerjaan"
+                                           class="form-control"
+                                           value="{{ old('pekerjaan') }}"
+                                           required>
+                                </td>
+                            </tr>
 
-                        <!-- Tombol -->
-                        <div class="d-flex justify-content-center flex-column flex-sm-row">
-                            <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
-                                <i class="fas fa-save me-1"></i> Simpan
-                            </button>
-                            <a href="{{ route('warga.index') }}" class="btn btn-outline-secondary px-4 rounded-pill">
-                                <i class="fas fa-times me-1"></i> Batal
-                            </a>
-                        </div>
-                    </form>
+                            {{-- PHONE --}}
+                            <tr>
+                                <th class="bg-light">Nomor Telepon</th>
+                                <td>
+                                    <input type="text"
+                                           name="phone"
+                                           class="form-control"
+                                           value="{{ old('phone') }}"
+                                           required>
+                                </td>
+                            </tr>
+
+                            {{-- EMAIL --}}
+                            <tr>
+                                <th class="bg-light">Email</th>
+                                <td>
+                                    <input type="email"
+                                           name="email"
+                                           class="form-control"
+                                           value="{{ old('email') }}"
+                                           required>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+
+                {{-- ACTION --}}
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
+                        <i class="fas fa-save me-1"></i> Simpan
+                    </button>
+                    <a href="{{ route('warga.index') }}"
+                       class="btn btn-outline-secondary px-4 rounded-pill">
+                        <i class="fas fa-times me-1"></i> Batal
+                    </a>
+                </div>
+
+            </form>
         </div>
     </div>
 </div>
-<!-- End Card Style Form -->
 
-{{-- end content --}}
 @endsection

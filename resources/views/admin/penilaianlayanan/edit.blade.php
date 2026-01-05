@@ -2,18 +2,17 @@
 @section('title', 'Edit Penilaian Layanan')
 @section('content')
 
-{{-- start content --}}
 <div class="py-4">
-    <div class="d-flex justify-content-between align-items-center w-100 flex-wrap text-center text-md-start">
+    <div class="d-flex justify-content-between w-100 flex-wrap">
         <div class="mb-3 mb-lg-0">
             <h4 class="display-3 text-black">Edit Penilaian Layanan</h4>
             <h6 class="section-title bg-white text-primary px-3">
-                Form untuk mengedit data Penilaian Layanan
+                Form edit penilaian layanan 
             </h6>
         </div>
         <div class="text-center mt-3">
             <a href="{{ route('penilaianlayanan.index') }}" class="btn btn-primary">
-                <i class="far fa-question-circle me-1"></i> Kembali
+                <i class="fas fa-arrow-left me-1"></i> Kembali
             </a>
         </div>
     </div>
@@ -25,98 +24,82 @@
     </div>
 @endif
 
-<!-- Card Style Form -->
-<div class="container-fluid py-5 px-4">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="course-item bg-light shadow-sm rounded-3 p-4">
+<div class="container-fluid py-4 px-4">
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-header bg-warning text-dark fw-semibold">
+            <i class="fas fa-edit me-2"></i> Edit Data Penilaian Layanan
+        </div>
 
-                    <form action="{{ route('penilaianlayanan.update', $dataPenilaianLayanan->penilaian_id) }}"
-                          method="POST">
-                        @csrf
-                        @method('PUT')
+        <div class="card-body">
+            <form action="{{ route('penilaianlayanan.update', $dataPenilaianLayanan->penilaian_id) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-                        <div class="text-center mb-4">
-                            <h5 class="fw-bold text-dark mb-1">Edit Penilaian Layanan</h5>
-                            <small class="text-muted">
-                                Ubah data penilaian layanan sesuai kebutuhan
-                            </small>
-                        </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle">
+                        <tbody>
+                            <!-- Pengaduan -->
+                            <tr>
+                                <th class="bg-light w-25">Pengaduan</th>
+                                <td>
+                                    <select name="pengaduan_id" class="form-select" required>
+                                        @foreach ($dataPengaduan as $p)
+                                            <option value="{{ $p->id }}"
+                                                {{ old('pengaduan_id', $dataPenilaianLayanan->pengaduan_id) == $p->id ? 'selected' : '' }}>
+                                                {{ $p->nomor_tiket }} - {{ $p->judul }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('pengaduan_id')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
+                                </td>
+                            </tr>
 
-                        <!-- Pengaduan -->
-                        <div class="mb-3">
-                            <label for="pengaduan_id" class="form-label fw-semibold text-primary">
-                                Pengaduan
-                            </label>
+                            <!-- Rating -->
+                            <tr>
+                                <th class="bg-light">Rating</th>
+                                <td>
+                                    <select name="rating" class="form-select" required>
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <option value="{{ $i }}"
+                                                {{ $dataPenilaianLayanan->rating == $i ? 'selected' : '' }}>
+                                                {{ $i }}
+                                            </option>
+                                        @endfor
+                                    </select>
+                                    @error('rating')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
+                                </td>
+                            </tr>
 
-                            <select name="pengaduan_id" id="pengaduan_id"
-                                class="form-select shadow-sm" required>
-
-                                @foreach ($dataPengaduan as $p)
-                                    <option value="{{ $p->id }}"
-                                        {{ old('pengaduan_id', $dataPenilaianLayanan->pengaduan_id) == $p->id ? 'selected' : '' }}>
-                                        {{ $p->nomor_tiket }} - {{ $p->judul }}
-                                    </option>
-                                @endforeach
-
-                            </select>
-
-                            @error('pengaduan_id')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Rating -->
-                        <div class="mb-3">
-                            <label for="rating" class="form-label fw-semibold text-primary">
-                                Rating
-                            </label>
-                            <select name="rating" id="rating"
-                                class="form-control shadow-sm" required>
-                                @for ($i = 1; $i <= 5; $i++)
-                                    <option value="{{ $i }}"
-                                        {{ $dataPenilaianLayanan->rating == $i ? 'selected' : '' }}>
-                                        {{ $i }}
-                                    </option>
-                                @endfor
-                            </select>
-                            @error('rating')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Komentar -->
-                        <div class="mb-4">
-                            <label for="komentar" class="form-label fw-semibold text-primary">
-                                Komentar
-                            </label>
-                            <textarea name="komentar" id="komentar" rows="3"
-                                class="form-control shadow-sm">{{ $dataPenilaianLayanan->komentar }}</textarea>
-                            @error('komentar')
-                                <div class="text-danger small">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Tombol Simpan & Batal -->
-                        <div class="d-flex justify-content-center flex-column flex-sm-row">
-                            <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
-                                <i class="fas fa-save me-1"></i> Simpan
-                            </button>
-                            <a href="{{ route('penilaianlayanan.index') }}"
-                               class="btn btn-outline-secondary px-4 rounded-pill">
-                                <i class="fas fa-times me-1"></i> Batal
-                            </a>
-                        </div>
-
-                    </form>
-
+                            <!-- Komentar -->
+                            <tr>
+                                <th class="bg-light">Komentar</th>
+                                <td>
+                                    <textarea name="komentar" rows="3" class="form-control">{{ $dataPenilaianLayanan->komentar }}</textarea>
+                                    @error('komentar')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+
+                <!-- Tombol -->
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success px-4 me-2 rounded-pill">
+                        <i class="fas fa-save me-1"></i> Update
+                    </button>
+                    <a href="{{ route('penilaianlayanan.index') }}" class="btn btn-outline-secondary px-4 rounded-pill">
+                        <i class="fas fa-times me-1"></i> Batal
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-<!-- End Card Style Form -->
 
-{{-- end content --}}
 @endsection

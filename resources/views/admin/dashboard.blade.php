@@ -1,28 +1,20 @@
 @extends('layouts.admin.app')
-@section('title', 'Dashboard Guest')
+@section('title', 'Dashboard')
 @section('content')
 
-    {{-- service start --}}
-    @include('layouts.admin.service')
-    {{-- service end --}}
+<div class="py-4">
+    <div class="d-flex justify-content-between w-100 flex-wrap px-4">
+        <div class="mb-3 mb-lg-0">
+            <h4 class="display-3 text-black">Dashboard</h4>
+        </div>
+    </div>
+</div>
 
-    {{-- about us start --}}
-    @include('layouts.admin.about')
-    {{-- about us end --}}
+<div class="row g-3">
+    @include('layouts.admin.infobox')
 
-    {{-- category start --}}
-    {{-- @include('layouts.admin.categories') --}}
-    {{-- category end --}}
+    @include('layouts.admin.pengaduan')
 
-    {{-- course start --}}
-    @include('layouts.admin.courses')
-    {{-- course end --}}
-
-    {{-- team start --}}
-    @include('layouts.admin.team')
-    {{-- team end --}}
-
-    {{-- testimonial start --}}
-    @include('layouts.admin.testimonial')
-    {{-- testimonial end --}}
+    @include('layouts.admin.tindaklanjut')
+</div>
 @endsection
